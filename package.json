@@ -1,0 +1,24 @@
+{
+  "name": "todonotodo",
+  "version": "1.0.0",
+  "description": "to do or not todo ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gavinkim/todonotodo.git"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "vuejs"
+  ],
+  "author": "Gavinkim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gavinkim/todonotodo/issues"
+  },
+  "homepage": "https://github.com/Gavinkim/todonotodo#readme"
+}
