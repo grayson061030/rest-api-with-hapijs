@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Gavinkim/todonotodo/issues"
   },
-  "homepage": "https://github.com/Gavinkim/todonotodo#readme"
+  "homepage": "https://github.com/Gavinkim/todonotodo#readme",
+  "dependencies": {
+    "hapi": "^17.5.1"
+  }
 }
