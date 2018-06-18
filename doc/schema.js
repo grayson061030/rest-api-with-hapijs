@@ -28,9 +28,13 @@ const ideaSchema = new mongoose.Schema({
     title: {type:String, required:true},
     content: {type:String,required:true},
     createdAt: {type:Date,default:Date.now},
-    votes: {
-        like: [{type:Number,default:0,ref:'Member'}],
-        unlike: [{type:Number,default:0,ref:'Member'}]
+    updatedAt: {type:Date},
+    meta : {
+        votes: {
+            like: [{type:Number,default:0,ref:'Member'}],
+            unlike: [{type:Number,default:0,ref:'Member'}]
+        },
+        views: {type:Number,default:0}
     },
     status:{type:Number,default:0}
 });
