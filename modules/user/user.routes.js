@@ -36,5 +36,20 @@ module.exports = [
             notes: 'Response JWT',
             auth: false
         }
+    },
+    {
+        path: '/users',
+        method: 'GET',
+        config: {
+            validate: {
+                headers: Joi.object({
+                    'authorization': Joi.string().required()
+                }).unknown()
+            },
+            handler: UserController.find,
+            tags: ['api','user'],
+            description: 'Find user info',
+            notes: 'Response a User'
+        }
     }
 ]

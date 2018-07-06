@@ -47,5 +47,18 @@ module.exports = {
         } catch (err) {
             throw Boom.unauthorized('Invalid credentials provided',err);
         }
+    },
+    async find(req,reply){
+        try {
+            const user = await User.findById(req.auth.credentials.id,(err,user)=>{
+                if(err){
+                    return reply(err).code(404);
+                }
+            });
+            return reply.response(user);
+
+        } catch (err) {
+            throw err;
+        }
     }
 }
