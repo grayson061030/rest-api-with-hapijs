@@ -11,7 +11,7 @@ module.exports = {
                 user: req.auth.credentials.id
             });
             return reply.response(idea);
-        }catch(e) {
+        }catch(err) {
             throw Boom.badImplementation('Could not create Idea');
         }
     },
@@ -21,7 +21,7 @@ module.exports = {
                 .populate('user')
                 .populate('comments');
             return reply.response(ideas);
-        } catch (e) {
+        } catch (err) {
             throw err;
         }
     },
@@ -69,8 +69,8 @@ module.exports = {
                     }
                     return reply.response(ideas);
                 });
-        } catch (e) {
-            throw e;
+        } catch (err) {
+            throw err;
         }
     }
 }

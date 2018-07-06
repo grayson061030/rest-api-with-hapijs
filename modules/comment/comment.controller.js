@@ -15,8 +15,8 @@ module.exports = {
             _idea.comments.push(comment);
             await _idea.save();
             return reply.response(comment);
-        } catch (e) {
-            throw e;
+        } catch (err) {
+            throw err;
         }
     }
 }
