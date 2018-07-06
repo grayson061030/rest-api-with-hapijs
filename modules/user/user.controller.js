@@ -48,5 +48,4 @@ module.exports = {
             throw Boom.unauthorized('Invalid credentials provided',err);
         }
     }
-
 }

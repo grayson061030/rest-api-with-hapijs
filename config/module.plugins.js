@@ -1,17 +1,17 @@
 'use strict';
 
 const UserModule = require('../modules/user/user.module');
-// const IdeaModule = require('../modules/idea/idea.module');
-// const CommentModule = require('../modules/comment.module');
+const IdeaModule = require('../modules/idea/idea.module');
+const CommentModule = require('../modules/comment/comment.module');
 const MongoosePlugin = require('../plugins/mongoose.plugin');
 const HapiSwagger = require('hapi-swagger');
 const Inert = require('inert');
 const Vision = require('vision');
 
 const goodOptions = {
-    ops: {
-        interval: 3000
-    },
+    // ops: {
+    //     interval: 3000
+    // },
     reporters: {
         myConsoleReporter: [{
             module: 'good-squeeze',
@@ -68,6 +68,6 @@ module.exports = [
     Inert,
     Vision,
     UserModule,
-    // IdeaModule,
-    // CommentModule
+    IdeaModule,
+    CommentModule
 ];
