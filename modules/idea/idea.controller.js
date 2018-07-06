@@ -19,7 +19,7 @@ module.exports = {
         try {
             const ideas = await Idea.find({})
                 .populate('user')
-                .populate('comments');
+                .populate('comment');
             return reply.response(ideas);
         } catch (err) {
             throw err;
