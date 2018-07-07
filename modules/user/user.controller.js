@@ -50,15 +50,16 @@ module.exports = {
     },
     async find(req,reply){
         try {
-            const user = await User.findById(req.auth.credentials.id,(err,user)=>{
+            await User.findById(req.auth.credentials.id,(err,user)=>{
                 if(err){
                     return reply(err).code(404);
                 }
+                return reply.response(user);
             });
-            return reply.response(user);
 
         } catch (err) {
-            throw err;
+            throw Boom.Boom.serverUnavailable('Server Error');
         }
     }
 }
+

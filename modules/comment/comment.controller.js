@@ -16,7 +16,7 @@ module.exports = {
             await _idea.save();
             return reply.response(comment);
         } catch (err) {
-            throw err;
+            throw Boom.Boom.serverUnavailable('Server Error');
         }
     }
 }

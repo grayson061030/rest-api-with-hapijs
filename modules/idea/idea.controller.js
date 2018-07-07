@@ -18,22 +18,25 @@ module.exports = {
     async find(req,reply){
         try {
             const ideas = await Idea.find({})
-                .populate('user')
-                .populate('comment');
+                .populate('user','-password -email -role -activate -created') // ignore user's info (password, email, role,activate, created)
             return reply.response(ideas);
         } catch (err) {
-            throw err;
+            throw Boom.Boom.serverUnavailable('Server Error');
         }
     },
     findById(req,reply) {
-        Idea.findById(req.params.id)
-            .populate('user')
-            .exec(function (err,idea) {
-                if(err){
-                    return reply(err).code(404);
-                }
-                return reply.response(idea);
-            });
+        try {
+            Idea.findById(req.params.id)
+                .populate('user','-password -email -role -activate -created') // ignore user's info (password, email, role,activate, created)
+                .exec(function (err, idea) {
+                    if (err) {
+                        return reply(err).code(404);
+                    }
+                    return reply.response(idea);
+                });
+        } catch (e) {
+            throw Boom.Boom.serverUnavailable('Server Error');
+        }
     },
     update(req,reply){
         let attributes = {};
@@ -44,25 +47,33 @@ module.exports = {
             attributes.description = req.payload.description;
         }
         attributes.updated = Date.now();
-        Idea.findByIdAndUpdate(req.params.id,attributes,{new: true},(err,idea)=>{
-            if(err){
-                return reply(err).code(500);
-            }
-            return reply.response(idea);
-        });
+        try {
+            Idea.findByIdAndUpdate(req.params.id, attributes, {new: true}, (err, idea) => {
+                if (err) {
+                    return reply(err).code(500);
+                }
+                return reply.response(idea);
+            });
+        } catch (err) {
+            throw Boom.Boom.serverUnavailable('Server Error');
+        }
     },
     delete(req,reply){
-        Idea.findByIdAndRemove(req.params.id,(err,result)=>{
-            if(err) {
-                return reply(err).code(500);
-            }
-            return reply.response({message: `idea deleted with id ${req.params.id}`})
-        });
+        try {
+            Idea.findByIdAndRemove(req.params.id, (err, result) => {
+                if (err) {
+                    return reply(err).code(500);
+                }
+                return reply.response({message: `idea deleted with id ${req.params.id}`})
+            });
+        } catch (e) {
+            throw Boom.Boom.serverUnavailable('Server Error');
+        }
     },
     async findByUserId(req,reply){
         try {
             await Idea.find({user: req.params.id})
-                .populate('user')
+                .populate('user','-password -email -role -activate -created') // ignore user's info (password, email, role,activate, created)
                 .exec(function (err, ideas) {
                     if (err) {
                         return reply(err).code(404);
@@ -70,7 +81,7 @@ module.exports = {
                     return reply.response(ideas);
                 });
         } catch (err) {
-            throw err;
+            throw Boom.Boom.serverUnavailable('Server Error');
         }
     }
 }

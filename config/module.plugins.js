@@ -19,18 +19,18 @@ const goodOptions = {
             args: [{ log: '*', response: '*'}]
         },{
             module: 'good-console'
-        },'stdout'],
-        myFileReporter: [{
-            module: 'good-squeeze',
-            name: 'Squeeze',
-            args: [{ ops: '*'}]
-        },{
-            module: 'good-squeeze',
-            name: 'SafeJson'
-        },{
-            module: 'good-file',
-            args: ['./logs/hapi-api.log']
-        }]
+        },'stdout']
+        // myFileReporter: [{
+        //     module: 'good-squeeze',
+        //     name: 'Squeeze',
+        //     args: [{ ops: '*'}]
+        // },{
+        //     module: 'good-squeeze',
+        //     name: 'SafeJson'
+        // },{
+        //     module: 'good-file',
+        //     args: ['./logs/todonotodoapi.log']
+        // }]
         // myHTTPReporter: [{
         //     module: 'good-squeeze',
         //     name: [{ error: '*'}]
