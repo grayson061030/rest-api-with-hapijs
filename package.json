@@ -1,7 +1,7 @@
 {
   "name": "todonotodo",
   "version": "1.0.0",
-  "description": "todonotodo",
+  "description": "todonotodo-api",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Gavinkim/todonotodo.git"
+    "url": "git+https://github.com/Gavinkim/todonotodo-api.git"
   },
   "keywords": [
-    "todonotodo"
+    "todonotodo-api"
   ],
   "author": "GavinKim",
   "license": "ISC",
@@ -34,7 +34,7 @@
     "vision": "^4.1.0"
   },
   "bugs": {
-    "url": "https://github.com/Gavinkim/todonotodo/issues"
+    "url": "https://github.com/Gavinkim/todonotodo-api/issues"
   },
-  "homepage": "https://github.com/Gavinkim/todonotodo#readme"
+  "homepage": "https://github.com/Gavinkim/todonotodo-api#readme"
 }
