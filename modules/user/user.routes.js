@@ -38,7 +38,7 @@ module.exports = [
         }
     },
     {
-        path: '/users',
+        path: '/users/me',
         method: 'GET',
         config: {
             validate: {
@@ -46,7 +46,7 @@ module.exports = [
                     'authorization': Joi.string().required()
                 }).unknown()
             },
-            handler: UserController.find,
+            handler: UserController.findme,
             tags: ['api','user'],
             description: 'Find user info',
             notes: 'Response a User'
