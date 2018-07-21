@@ -50,12 +50,14 @@ module.exports = {
     },
     async findme(req,reply){
         try {
-            await User.findById(req.auth.credentials.id,(err,user)=>{
-                if(err){
-                    return reply(err).code(404);
-                }
-                return reply.response(user);
-            });
+            await User.findById(req.auth.credentials.id)
+                .select('-password -role -__v -activate') //exclude fields
+                .exec(function (err,user) {
+                    if(err) {
+                        return reply(err).code(404);
+                    }
+                    return reply.response(user)
+                })
 
         } catch (err) {
             throw Boom.Boom.serverUnavailable('Server Error');
