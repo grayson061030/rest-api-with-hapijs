@@ -39,7 +39,14 @@ module.exports = {
             throw Boom.Boom.serverUnavailable('Server Error');
         }
     },
-    update(req,reply){
+    async update(req,reply){
+        // 내가 작성한 아이디인지 검증
+        const _idea = await Idea.findOne({
+            _id: req.params.id
+        });
+        if(_idea.user._id == null || _idea.user._id != req.auth.credentials.id) {
+            return reply('Bad Request').code(404);
+        }
         let attributes = {};
         if(req.payload.title){
             attributes.title = req.payload.title;
@@ -59,8 +66,15 @@ module.exports = {
             throw Boom.Boom.serverUnavailable('Server Error');
         }
     },
-    delete(req,reply){
+    async delete(req,reply){
         try {
+            // 내가 작성한 아이디인지 검증
+            const _idea = await Idea.findOne({
+                _id: req.params.id
+            });
+            if(_idea.user._id == null || _idea.user._id != req.auth.credentials.id) {
+                return reply('Bad Request').code(404);
+            }
             Idea.findByIdAndRemove(req.params.id, (err, result) => {
                 if (err) {
                     return reply(err).code(500);
