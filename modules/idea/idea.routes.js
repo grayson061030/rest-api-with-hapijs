@@ -3,18 +3,16 @@
 const IdeaController = require('./idea.controller');
 const Joi = require('joi');
 
-const schema = Joi.object().keys({
-    title: Joi.string().required(),
-    description: Joi.string().required(),
-});
-
 module.exports = [
     {
         path: '/ideas',
         method: 'POST',
         config: {
             validate: {
-                payload: schema,
+                payload: Joi.object().keys({
+                        title: Joi.string().required(),
+                        description: Joi.string().required()
+                    }),
                 headers: Joi.object({
                     'authorization': Joi.string().required()
                 }).unknown()
@@ -68,7 +66,7 @@ module.exports = [
                 }),
                 payload: Joi.object().keys({
                     title: Joi.string().optional(),
-                    description: Joi.string().optional(),
+                    description: Joi.string().optional()
                 }),
                 headers: Joi.object({
                     'authorization': Joi.string().required()
@@ -114,6 +112,25 @@ module.exports = [
             tags: ['api','Idea'],
             description: 'find By user id',
             notes: 'Response ideas of user'
+        }
+    },
+    {
+        path: '/ideas/vote/{idea_id}/{vote}',
+        method: 'GET',
+        config: {
+            validate: {
+                params: Joi.object().keys({
+                    idea_id: Joi.string().required(),
+                    vote: Joi.string().valid('UP','DOWN').required()
+                }),
+                headers: Joi.object({
+                    'authorization': Joi.string().required()
+                }).unknown()
+            },
+            handler: IdeaController.vote,
+            tags: ['api','Idea'],
+            description: 'vote idea',
+            notes: 'Response message'
         }
     }
 ];

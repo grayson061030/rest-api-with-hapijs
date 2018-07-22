@@ -7,12 +7,10 @@ const ideaSchema = new Schema({
     created: {type:Date,default:Date.now},
     updated: {type:Date},
     deleted: {type:Date},
-    meta : {
-        down: { type: Number, default:0 }, // down 투표 수
-        up: { type: Number, default:0 }, // up 투표수
-        status:{type:Number,default:0}, // 0: 승인 대기, 1: 승인, 2: 차단)
-    },
-    comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}] // 아이디어에 대한 코멘트
+    vote_down: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    vote_up: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    status:{type:Number,default:0}, // 0: 대기, 1: 승인, 2: 삭제 ,3: 차단)
+    comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}]
 });
 
 module.exports = mongoose.model('Ideas',ideaSchema);

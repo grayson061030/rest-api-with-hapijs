@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     username: {type: String,requied: true},
-    thumbnail:{type: String, default:'default_thumbnail.png'},
+    thumbnail:{type: String, default:'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y'},
     email: {type: String, unique:true,lowercase:true},
     password: {type:String,trim:true},
     facebook:{

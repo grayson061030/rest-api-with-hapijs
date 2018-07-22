@@ -7,8 +7,9 @@ const commentSchema = new Schema({
     created: {type: Date, deault: Date.now},
     deleted: {type: Date},
     updated: {type: Date},
-    meta: {
-        like: {type: Number,default: 0},
+    vote: {
+        up: [{type: Schema.Types.ObjectId, ref: 'User'}],
+        down: [{type: Schema.Types.ObjectId, ref: 'User'}],
         status: {type: Number, default: 0}// 0: 활성화, 1: 삭제, 2: reject
     }
 });
