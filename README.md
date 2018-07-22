@@ -11,3 +11,7 @@
 ````sql
     - mongoose pagination with populate ignore
 ````
+
+### Result
+
+> > ![Alt text](./docs/result.png)
