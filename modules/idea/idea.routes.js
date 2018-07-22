@@ -2,6 +2,7 @@
 
 const IdeaController = require('./idea.controller');
 const Joi = require('joi');
+const HapiPagination = require('hapi-pagination');
 
 module.exports = [
     {
@@ -32,6 +33,10 @@ module.exports = [
             description: 'Find all Idea',
             notes: 'Response all the idea',
             validate: {
+                query: {
+                    page: Joi.number().integer().positive(),
+                    limit: Joi.number().integer().default(5)
+                },
                 headers: Joi.object({
                     'authorization' : Joi.string().optional()
                 }).unknown()

@@ -26,11 +26,13 @@
     "good-squeeze": "^5.0.2",
     "hapi": "^16.6.2",
     "hapi-auth-jwt2": "^7.3.0",
+    "hapi-pagination": "^2.0.0",
     "hapi-swagger": "^7.2.0",
     "inert": "^4.0.2",
     "joi": "^13.4.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.1.6",
+    "mongoose-paginate": "^5.0.3",
     "vision": "^4.1.0"
   },
   "bugs": {

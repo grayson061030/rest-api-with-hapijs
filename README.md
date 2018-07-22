@@ -6,3 +6,8 @@
 `````sql
     - share idea and  discuss, vote
 `````
+
+### TODO
+````sql
+    - mongoose pagination with populate ignore
+````

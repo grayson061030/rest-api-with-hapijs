@@ -44,6 +44,7 @@ const goodOptions = {
         // }]
     }
 }
+
 module.exports = [
     {
         register: MongoosePlugin,

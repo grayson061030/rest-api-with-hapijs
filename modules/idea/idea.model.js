@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 const ideaSchema = new Schema({
     user: {type:Schema.Types.ObjectId,required: true,ref:'User'},
@@ -12,5 +13,5 @@ const ideaSchema = new Schema({
     status:{type:Number,default:0}, // 0: 대기, 1: 승인, 2: 삭제 ,3: 차단)
     comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}]
 });
-
+ideaSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Ideas',ideaSchema);

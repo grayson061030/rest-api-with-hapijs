@@ -17,10 +17,36 @@ module.exports = {
     },
     async find(req,reply){
         try {
-            const ideas = await Idea.find({})
-                .sort({created: 'desc'})
-                .populate('user','-password -email -role -activate -created') // ignore user's info (password, email, role,activate, created)
-            return reply.response(ideas);
+            // 페이징 처리
+            const params = Object.assign({},req.query);
+            params.offset = (params.page - 1) * params.limit;
+            var options = {
+                offset: params.offset,
+                page: params.page,
+                limit:params.limit,
+                lean: false,
+                populate: 'user',
+                sort: {created: -1}
+            };
+            Idea.paginate({},options,function (err,res) {
+                if(err) {
+                    throw Boom.Boom.serverUnavailable('Server Error');
+                }
+                var result = {
+                    data: res.docs,
+                    total: res.total,
+                    current_page: params.page,
+                    last_page: Math.ceil(res.total/params.limit)
+                }
+                return reply.response(result);
+            });
+
+            // const ideas = await Idea.find({})
+            //     .limit(params.limit)
+            //     .skip(params.offset)
+            //     .sort({created: 'desc'})
+            //     .populate('user','-password -email -role -activate -created') // ignore user's info (password, email, role,activate, created)
+            // return reply.response(ideas);
         } catch (err) {
             throw Boom.Boom.serverUnavailable('Server Error');
         }
