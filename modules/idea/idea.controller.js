@@ -135,18 +135,26 @@ module.exports = {
             if(_idea.user._id == req.auth.credentials.id) {
                 return reply('Success');
             }
-            // 이미 투표한 아이디어 인가?
-            if(JSON.stringify(_idea.vote_up).includes(req.auth.credentials.id) || JSON.stringify(_idea.vote_down).includes(req.auth.credentials.id)){
-                return reply('Success');
-            }
             // 투표 상태 생성
             let vote_result = req.params.vote == 'DOWN' ? {vote_down:req.auth.credentials.id} : {vote_up:req.auth.credentials.id};
-            Idea.findByIdAndUpdate(req.params.idea_id, {$push: vote_result}, {new: true},(err,idea) => {
-                if(err) {
-                    return reply(err).code(500);
-                }
-                return reply.response('Success');
-            });
+            // 이미 투표 한 상태 체크 후 제거
+            if(JSON.stringify(_idea.vote_up).includes(req.auth.credentials.id) || JSON.stringify(_idea.vote_down).includes(req.auth.credentials.id)){
+                Idea.findByIdAndUpdate(req.params.idea_id, {$pull: vote_result}, {new: true},(err,idea) => {
+                    if(err) {
+                        return reply(err).code(500);
+                    }
+
+                    return reply.response(idea);
+                });
+            }else{
+                Idea.findByIdAndUpdate(req.params.idea_id, {$push: vote_result}, {new: true},(err,idea) => {
+                    if(err) {
+                        return reply(err).code(500);
+                    }
+                    return reply.response(idea);
+                });
+            }
+
         } catch (err) {
             throw Boom.Boom.serverUnavailable('Server Error');
         }
