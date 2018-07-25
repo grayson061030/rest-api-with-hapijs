@@ -61,13 +61,14 @@ module.exports = [
                     id: Joi.string().required()
                 }),
                 headers: Joi.object({
-                    'authorization': Joi.string().required()
+                    'authorization': Joi.string().optional()
                 }).unknown()
             },
             handler: UserController.profile,
             tags: ['api', 'user'],
             description: 'Find User profile',
-            notes: 'Response a user'
+            notes: 'Response a user',
+            auth: false
         }
     }
 ]

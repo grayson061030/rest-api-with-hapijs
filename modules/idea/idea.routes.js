@@ -2,7 +2,6 @@
 
 const IdeaController = require('./idea.controller');
 const Joi = require('joi');
-const HapiPagination = require('hapi-pagination');
 
 module.exports = [
     {
@@ -32,6 +31,7 @@ module.exports = [
             tags: ['api','Ideas'],
             description: 'Find all Idea',
             notes: 'Response all the idea',
+            auth: false,
             validate: {
                 query: {
                     page: Joi.number().integer().positive(),
@@ -120,7 +120,8 @@ module.exports = [
             handler: IdeaController.findByUserId,
             tags: ['api','Idea'],
             description: 'find By user id',
-            notes: 'Response ideas of user'
+            notes: 'Response ideas of user',
+            auth: false
         }
     },
     {
