@@ -106,11 +106,15 @@ module.exports = [
         method: 'GET',
         config: {
             validate: {
+                query: {
+                    page: Joi.number().integer().positive(),
+                    limit: Joi.number().integer().default(5)
+                },
                 params: Joi.object().keys({
                     id: Joi.string().required()
                 }),
                 headers: Joi.object({
-                    'authorization' : Joi.string().required()
+                    'authorization' : Joi.string().optional()
                 }).unknown()
             },
             handler: IdeaController.findByUserId,

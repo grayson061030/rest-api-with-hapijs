@@ -25,10 +25,10 @@ module.exports = {
                 page: params.page,
                 limit:params.limit,
                 lean: false,
-                populate: 'user',
+                populate: '-password -email -role -activate -created',
                 sort: {created: -1}
             };
-            Idea.paginate({},options,function (err,res) {
+            await Idea.paginate({},options,function (err,res) {
                 if(err) {
                     throw Boom.Boom.serverUnavailable('Server Error');
                 }
@@ -41,12 +41,35 @@ module.exports = {
                 return reply.response(result);
             });
 
-            // const ideas = await Idea.find({})
-            //     .limit(params.limit)
-            //     .skip(params.offset)
-            //     .sort({created: 'desc'})
-            //     .populate('user','-password -email -role -activate -created') // ignore user's info (password, email, role,activate, created)
-            // return reply.response(ideas);
+        } catch (err) {
+            throw Boom.Boom.serverUnavailable('Server Error');
+        }
+    },
+    async findByUserId(req,reply){
+        try {
+            // 페이징 처리
+            const params = Object.assign({},req.query);
+            params.offset = (params.page - 1) * params.limit;
+            var options = {
+                offset: params.offset,
+                page: params.page,
+                limit:params.limit,
+                lean: false,
+                populate: '-password -email -role -activate -created',
+                sort: {created: -1}
+            };
+            await Idea.paginate({user: req.params.id},options,function (err,res) {
+                if(err) {
+                    throw Boom.Boom.serverUnavailable('Server Error');
+                }
+                var result = {
+                    data: res.docs,
+                    total: res.total,
+                    current_page: params.page,
+                    last_page: Math.ceil(res.total/params.limit)
+                }
+                return reply.response(result);
+            });
         } catch (err) {
             throw Boom.Boom.serverUnavailable('Server Error');
         }
@@ -59,6 +82,7 @@ module.exports = {
                     if (err) {
                         return reply(err).code(404);
                     }
+
                     return reply.response(idea);
                 });
         } catch (e) {
@@ -109,20 +133,6 @@ module.exports = {
             });
         } catch (e) {
             throw Boom.Boom.serverUnavailable(e);
-        }
-    },
-    async findByUserId(req,reply){
-        try {
-            await Idea.find({user: req.params.id})
-                .populate('user','-password -email -role -activate -created') // ignore user's info (password, email, role,activate, created)
-                .exec(function (err, ideas) {
-                    if (err) {
-                        return reply(err).code(404);
-                    }
-                    return reply.response(ideas);
-                });
-        } catch (err) {
-            throw Boom.Boom.serverUnavailable('Server Error');
         }
     },
     async vote(req, reply) {
