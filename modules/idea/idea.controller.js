@@ -25,10 +25,10 @@ module.exports = {
                 page: params.page,
                 limit:params.limit,
                 lean: false,
-                populate: '-password -email -role -activate -created',
+                populate: 'user',//fixme: 해당 필드 제거 할것 '-password -role -activate -created'
                 sort: {created: -1}
             };
-            await Idea.paginate({},options,function (err,res) {
+            Idea.paginate({},options,function (err,res) {
                 if(err) {
                     throw Boom.Boom.serverUnavailable('Server Error');
                 }
@@ -55,7 +55,7 @@ module.exports = {
                 page: params.page,
                 limit:params.limit,
                 lean: false,
-                populate: '-password -email -role -activate -created',
+                populate: 'user', //fixme: 해당 필드 제거 할것 '-password -role -activate -created'
                 sort: {created: -1}
             };
             await Idea.paginate({user: req.params.id},options,function (err,res) {
