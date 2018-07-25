@@ -38,7 +38,7 @@ module.exports = [
         }
     },
     {
-        path: '/users/me',
+        path: '/users/me', // my info
         method: 'GET',
         config: {
             validate: {
@@ -50,6 +50,24 @@ module.exports = [
             tags: ['api','user'],
             description: 'Find user info',
             notes: 'Response a User'
+        }
+    },
+    {
+        path: '/users/{id}', // other user info
+        method: 'GET',
+        config: {
+            validate: {
+                params: Joi.object().keys({
+                    id: Joi.string().required()
+                }),
+                headers: Joi.object({
+                    'authorization': Joi.string().required()
+                }).unknown()
+            },
+            handler: UserController.profile,
+            tags: ['api', 'user'],
+            description: 'Find User profile',
+            notes: 'Response a user'
         }
     }
 ]

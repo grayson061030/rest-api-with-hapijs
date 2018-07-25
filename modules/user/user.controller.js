@@ -62,5 +62,19 @@ module.exports = {
         } catch (err) {
             throw Boom.Boom.serverUnavailable('Server Error');
         }
+    },
+    async profile(req,reply){
+        try{
+            await User.findById(req.params.id)
+                .select('-password -role -__v -activate -created')
+                .exec(function (err,user) {
+                    if(err) {
+                        return reply(err).code(404);
+                    }
+                    return reply.response(user);
+                })
+        } catch(err){
+            throw Boom.Boom.serverUnavailable('Server error');
+        }
     }
 }
