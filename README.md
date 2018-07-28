@@ -7,10 +7,18 @@
     - share idea and  discuss, vote
 `````
 
-### TODO
-````sql
-    - mongoose pagination with populate ignore
-````
+### Pre settings and Start
+```sql
+    - install mongodb
+    - install nodejs
+    - install nodemon
+    - npm install
+    - npm start
+```
+
+### api doc
+
+> > http://localhost:5959/documentation 
 
 ### Result
 
