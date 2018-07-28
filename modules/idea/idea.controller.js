@@ -5,12 +5,20 @@ const Idea = require('./idea.model');
 module.exports = {
     async create (req,reply) {
         try{
-            const idea = await Idea.create({
+            const _idea = await Idea.create({
                 title: req.payload.title,
                 description: req.payload.description,
                 user: req.auth.credentials.id
             });
-            return reply.response(idea);
+            //작성한 아이디어를 다시 아이디어로 조회하여 가져오도록 한다.
+            Idea.findById(_idea.id)
+                .populate('user','-password -email -role -activate -created') // ignore user's info (password, email, role,activate, created)
+                .exec(function (err, idea) {
+                    if (err) {
+                        return reply(err).code(404);
+                    }
+                    return reply.response(idea);
+                });
         }catch(err) {
             throw Boom.badImplementation('Could not create Idea');
         }
