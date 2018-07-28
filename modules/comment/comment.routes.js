@@ -21,5 +21,44 @@ module.exports = [
             tags: ['api','Comment'],
             notes: 'Response new created Comment'
         }
+    },
+    {
+        path: '/comments/{id}',
+        method: 'DELETE',
+        config: {
+            validate: {
+                params: Joi.object().keys({
+                    id: Joi.string().required()
+                }),
+                headers: Joi.object({
+                    'authorization' : Joi.string().required()
+                }).unknown()
+            },
+            handler: CommentController.delete,
+            tags: ['api','Comment'],
+            description: 'Delete comment',
+            notes: 'Response delete success message'
+        }
+    },
+    {
+        path: '/comments/{id}',
+        method: 'PUT',
+        config: {
+            validate: {
+                params: Joi.object().keys({
+                    id: Joi.string().required()
+                }),
+                payload: Joi.object().keys({
+                    description: Joi.string().required()
+                }),
+                headers: Joi.object({
+                    'authorization': Joi.string().required()
+                }).unknown()
+            },
+            handler: CommentController.update,
+            tags: ['api','Idea'],
+            description: 'Update Comment By Id',
+            notes: 'Response update Comment'
+        }
     }
 ]

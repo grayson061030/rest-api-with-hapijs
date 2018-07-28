@@ -16,9 +16,18 @@ module.exports = {
             const encrypted_password = await UtilsService.hash_password(user.password);
             user.password = encrypted_password;
             const savedUser = await user.save();
+            //Fixme: sending email for validate users email
             return reply.response('Signup successful !');
         } catch (err) {
             throw Boom.badImplementation('Signup Failed',err);
+        }
+    },
+    async email_validation(req,reply) {
+      //TODO: 전송한 이메일 유효성 확인을 위한 값 검사 및 사용자 활성화
+        try {
+            return reply.response('Success email validation');
+        } catch (e) {
+            throw Boom.Boom.serverUnavailable('Server error');
         }
     },
     async login(req,reply) {
@@ -63,9 +72,9 @@ module.exports = {
             throw Boom.Boom.serverUnavailable('Server Error');
         }
     },
-    async profile(req,reply){
+    profile(req,reply){
         try{
-            await User.findById(req.params.id)
+            User.findById(req.params.id)
                 .select('-password -role -__v -activate -created')
                 .exec(function (err,user) {
                     if(err) {
@@ -75,6 +84,32 @@ module.exports = {
                 })
         } catch(err){
             throw Boom.Boom.serverUnavailable('Server error');
+        }
+    },
+    async update_avatar(req,reply) {
+        //Todo: avatar 이미지 업데이트 (avatar_image_directories+'/'+user._id+'.png or jpg')
+        try {
+            console.log(req.payload['avatar'].hapi.filename);
+            return reply.response('Success'); // fixme: 업데이트 된 사용자 정보와 변경된 이미지를 포함하여 리턴
+        } catch (e) {
+            throw Boom.Boom.serverUnavailable('Server Error');
+        }
+    },
+    async update_me(req,reply){
+        //Todo: 유저 정보 업데이트
+        //username,about,
+        try {
+            return reply.response('Success');
+        } catch (e) {
+            throw Boom.Boom.serverUnavailable('Server Error');
+        }
+    },
+    async delete_me(req,reply){
+        //Todo: 유저 삭제
+        try {
+            return reply.response('Success deleted');
+        } catch (e) {
+            throw Boom.Boom.serverUnavailable('Server Error');
         }
     }
 }

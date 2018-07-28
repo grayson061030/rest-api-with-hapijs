@@ -70,5 +70,75 @@ module.exports = [
             notes: 'Response a user',
             auth: false
         }
+    },
+    {
+        path: '/users/me/avatar',
+        method: 'PUT',
+        config: {
+            payload: {
+                output: 'stream',
+                parse: true,
+                allow: 'multipart/form-data',
+                maxBytes: 2 * 1000 * 1000,
+            },
+            validate: {
+                headers: Joi.object({
+                    'authorization': Joi.string().required()
+                }).unknown()
+            },
+            handler: UserController.update_avatar,
+            tags: ['api','user'],
+            description: 'update user avatar',
+            notes: 'Response Success message'
+        }
+    },
+    {
+        path: '/users/me',
+        method: 'PUT',
+        config: {
+            validate: {
+                payload: Joi.object().keys({
+                    username: Joi.string().optional(),
+                    about: Joi.string().optional()
+                }),
+                headers: Joi.object({
+                    'authorization': Joi.string().required()
+                }).unknown()
+            },
+            handler: UserController.update_me,
+            tags: ['api','User'],
+            description: 'Update User info',
+            notes: 'Response update User'
+        }
+    },
+    {
+        path: '/users/me',
+        method: 'DELETE',
+        config: {
+            validate: {
+                headers: Joi.object({
+                    'authorization' : Joi.string().required()
+                }).unknown()
+            },
+            handler: UserController.delete_me,
+            tags: ['api','User'],
+            description: 'Delete User',
+            notes: 'Response delete success message'
+        }
+    },
+    {
+        path: '/users/validation/email/{id}',
+        method: 'GET',
+        config: {
+            validate: {
+                params: Joi.object().keys({
+                    id: Joi.string().required()
+                })
+            },
+            handler: UserController.email_validation,
+            tags: ['api','User'],
+            description: 'Validation User email',
+            notes: 'Response validation success message'
+        }
     }
 ]

@@ -18,5 +18,21 @@ module.exports = {
         } catch (err) {
             throw Boom.Boom.serverUnavailable('Server Error');
         }
+    },
+    async delete(req,reply){
+        try {
+            //Todo: 내가 작성한 코멘트인지 검증
+            return reply.response({message: `comment deleted by id ${req.params.id}`});
+        } catch (e) {
+            throw Boom.Boom.serverUnavailable(e);
+        }
+    },
+    async update(req,reply){
+        //Todo: 내가 작성한 코멘트인지 검증
+        try {
+            return reply.response({message: `comment updated by id ${req.params.id}`});
+        } catch (err) {
+            throw Boom.Boom.serverUnavailable('Server Error');
+        }
     }
 }
