@@ -17,6 +17,7 @@ module.exports = {
             user.password = encrypted_password;
             const savedUser = await user.save();
             //Fixme: sending email for validate users email
+            //ex: 이메일 전송 링크생성 및 전송 (ex: http://localhost/users/validation/email/woiwerwo1ksoi12)
             return reply.response('Signup successful !');
         } catch (err) {
             throw Boom.badImplementation('Signup Failed',err);
@@ -108,6 +109,15 @@ module.exports = {
         //Todo: 유저 삭제
         try {
             return reply.response('Success deleted');
+        } catch (e) {
+            throw Boom.Boom.serverUnavailable('Server Error');
+        }
+    },
+    async reset_password(req,reply){
+        //Todo: 유저 패스워드 변경
+        //가입 유저의 이름과 이메일 확인 , 임시비밀번호 저장 및 이메일로 임시 비밀번호 전송
+        try {
+            return reply.response('Success send email temp password');
         } catch (e) {
             throw Boom.Boom.serverUnavailable('Server Error');
         }

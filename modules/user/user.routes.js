@@ -127,7 +127,7 @@ module.exports = [
         }
     },
     {
-        path: '/users/validation/email/{id}',
+        path: '/users/validation/email/{id}', // 이메일로 전송된 링크 (ex: http://localhost/users/validation/email/woiwerwo1ksoi12)
         method: 'GET',
         config: {
             validate: {
@@ -139,6 +139,22 @@ module.exports = [
             tags: ['api','User'],
             description: 'Validation User email',
             notes: 'Response validation success message'
+        }
+    },
+    {
+        path: '/users/reset/password',
+        method: 'POST',
+        config: {
+            validate: {
+                payload: Joi.object().keys({
+                    username: Joi.string().required(),
+                    email: Joi.string().email().required()
+                })
+            },
+            handler: UserController.reset_password,
+            tags: ['api','User'],
+            description: 'Reset password',
+            notes: 'Response success message'
         }
     }
 ]

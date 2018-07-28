@@ -11,6 +11,7 @@ const UserSchema = new Schema({
         activate: {type: Boolean,default:true} // 이메일 확인
     },
     password: {type:String,trim:true},
+    temp_password: {type:String,trim:true}, // 이메일을 통해 임시 비밀번호 전송, 패스워드 찾기할 경우 사용
     facebook:{
         id: {type: String},
         accessToken: {type: String},
