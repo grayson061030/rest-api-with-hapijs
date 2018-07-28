@@ -138,11 +138,12 @@ module.exports = [
             handler: UserController.email_validation,
             tags: ['api','User'],
             description: 'Validation User email',
-            notes: 'Response validation success message'
+            notes: 'Response validation success message',
+            auth: false
         }
     },
     {
-        path: '/users/reset/password',
+        path: '/users/reset/password',//로그인 전 사용자
         method: 'POST',
         config: {
             validate: {
@@ -154,7 +155,8 @@ module.exports = [
             handler: UserController.reset_password,
             tags: ['api','User'],
             description: 'Reset password',
-            notes: 'Response success message'
+            notes: 'Response success message',
+            auth: false
         }
     }
 ]
