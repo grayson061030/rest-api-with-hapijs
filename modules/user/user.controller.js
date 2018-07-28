@@ -121,5 +121,13 @@ module.exports = {
         } catch (e) {
             throw Boom.Boom.serverUnavailable('Server Error');
         }
+    },
+    async change_password(req,reply){
+        //Todo: 로그인 된 사용자의 패스워드 변경
+        try {
+            return reply.response('Success changed password');
+        } catch (e) {
+            throw Boom.Boom.serverUnavailable('Server Error');
+        }
     }
 }

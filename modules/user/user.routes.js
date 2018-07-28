@@ -137,7 +137,7 @@ module.exports = [
             },
             handler: UserController.email_validation,
             tags: ['api','User'],
-            description: 'Validation User email',
+            description: 'Validation User email before siginup',
             notes: 'Response validation success message',
             auth: false
         }
@@ -154,9 +154,27 @@ module.exports = [
             },
             handler: UserController.reset_password,
             tags: ['api','User'],
-            description: 'Reset password',
+            description: 'Reset password before login user',
             notes: 'Response success message',
             auth: false
+        }
+    },
+    {
+        path: '/users/reset/password',//로그인 후 사용자
+        method: 'PUT',
+        config: {
+            validate: {
+                payload: Joi.object().keys({
+                    password: Joi.string().required()
+                }),
+                headers: Joi.object({
+                    'authorization' : Joi.string().required()
+                }).unknown()
+            },
+            handler: UserController.change_password,
+            tags: ['api','User'],
+            description: 'Reset password after login user',
+            notes: 'Response success message'
         }
     }
 ]
