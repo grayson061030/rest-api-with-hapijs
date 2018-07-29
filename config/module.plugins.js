@@ -49,7 +49,7 @@ module.exports = [
     {
         register: MongoosePlugin,
         options: {
-            mongo_db_uri: 'mongodb://localhost:27017/todonotodo'
+            mongo_db_uri: 'mongodb://localhost:27018/todonotodo'
         }
     },
     {
