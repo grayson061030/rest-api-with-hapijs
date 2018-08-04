@@ -1,7 +1,7 @@
 'use strict';
 
 const Idea = require('./idea.model');
-
+const SELF_VOTE = 2001;
 module.exports = {
     async create (req,reply) {
         try{
@@ -149,9 +149,9 @@ module.exports = {
             const _idea = await Idea.findOne({
                 _id: req.params.idea_id
             });
-            // 내가 작성한 아이디어 일 경우 투표 할 수 없으므로 단순 리턴
+            // 내가 작성한 아이디어 일 경우 투표 할 수 없으므로 SELF_VOTE 값 리턴
             if(_idea.user._id == req.auth.credentials.id) {
-                return reply('Success');
+                return reply(SELF_VOTE);
             }
             // 투표 상태 생성
             let vote_result = req.params.vote == 'DOWN' ? {vote_down:req.auth.credentials.id} : {vote_up:req.auth.credentials.id};
