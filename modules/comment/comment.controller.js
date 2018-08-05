@@ -21,7 +21,6 @@ module.exports = {
     },
     async delete(req,reply){
         try {
-            //Todo: 내가 작성한 코멘트인지 검증
             return reply.response({message: `comment deleted by id ${req.params.id}`});
         } catch (e) {
             throw Boom.Boom.serverUnavailable(e);
@@ -31,7 +30,22 @@ module.exports = {
         //Todo: 내가 작성한 코멘트인지 검증
         try {
             return reply.response({message: `comment updated by id ${req.params.id}`});
-        } catch (err) {
+        } catch (e) {
+            throw Boom.Boom.serverUnavailable('Server Error');
+        }
+    },
+    findByIdeaId(req,reply){
+        try {
+            //todo: adding pagenation
+            Comment.find({'idea':req.params.id})
+                .populate('user','-password -role -activate -created')
+                .exec(function (err, comment) {
+                    if (err) {
+                        return reply(err).code(404);
+                    }
+                    return reply.response(comment);
+                });
+        } catch (e) {
             throw Boom.Boom.serverUnavailable('Server Error');
         }
     }

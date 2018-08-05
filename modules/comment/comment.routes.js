@@ -56,9 +56,27 @@ module.exports = [
                 }).unknown()
             },
             handler: CommentController.update,
-            tags: ['api','Idea'],
+            tags: ['api','Comment'],
             description: 'Update Comment By Id',
             notes: 'Response update Comment'
+        }
+    },
+    {
+        path: '/comments/{id}',
+        method: 'GET',
+        config: {
+            validate: {
+                params: Joi.object().keys({
+                    id: Joi.string().required()
+                }),
+                headers: Joi.object({
+                    'authorization': Joi.string().required()
+                }).unknown()
+            },
+            handler: CommentController.findByIdeaId,
+            tags: ['api','Comment'],
+            description: 'Find Comments By IdeaId',
+            notes: 'Response a Comments'
         }
     }
 ]

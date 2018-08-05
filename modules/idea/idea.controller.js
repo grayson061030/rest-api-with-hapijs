@@ -85,7 +85,7 @@ module.exports = {
     findById(req,reply) {
         try {
             Idea.findById(req.params.id)
-                .populate('user','-password -email -role -activate -created') // ignore user's info (password, email, role,activate, created)
+                .populate('user comments','-password -role -activate') // ignore user's info (password, email, role,activate, created)
                 .exec(function (err, idea) {
                     if (err) {
                         return reply(err).code(404);
