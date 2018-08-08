@@ -37,8 +37,9 @@ module.exports = {
     findByIdeaId(req,reply){
         try {
             //todo: adding pagenation
+            //todo: sort 추가할것
             Comment.find({'idea':req.params.id})
-                .populate('user','-password -role -activate -created')
+                .populate('user','-password -role -activate')
                 .exec(function (err, comment) {
                     if (err) {
                         return reply(err).code(404);
